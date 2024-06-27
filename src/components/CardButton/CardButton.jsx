@@ -1,6 +1,8 @@
-import "./CardButton.css";
-function CardButton({ children }) {
-  return <button className="card-button">{children}</button>;
+import './CardButton.css';
+
+function CardButton({ children, className }) {
+  const cl = 'card-button' + (className ? ' ' + className : '');
+  return <button className={cl}>{children}</button>;
 }
 
 export default CardButton;

@@ -4,8 +4,14 @@
     color: #FFF;
     padding: 20px;
     display: block;
-    text-align: left;
+    text-align: start;
+    display: block;
+    cursor: pointer;
+    border:none;
+    width: 100%;
+   
 }
+
 .card-button:hover {
     background: rgba(255, 255, 255, 0.10);
 }

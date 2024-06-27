@@ -19,7 +19,7 @@ module.exports = {
     ],
     'semi': ['error', 'always', { 'omitLastInOneLineBlock': false}],  //везде двоеточия
     // 'comma-dangle': ['error', 'never'],
-		// quotes: ['error', 'single'],
+		// quotes: ['false', 'single'],
 		// 'react/prop-types': [0],
 		// 'indent': ['error', 'tab']
       "react/prop-types": "off"
