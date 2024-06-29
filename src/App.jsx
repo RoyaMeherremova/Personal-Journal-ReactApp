@@ -1,49 +1,48 @@
+import { useState } from 'react';
 import './App.css';
-import CardButton from './components/CardButton/CardButton';
 import Header from './components/Header/Header';
-import JournalItem from './components/JournalItem/JournalItem';
 import JournalAddButton from './components/JournalAddButton/JournalAddButton';
 import JournalList from './components/JournalList/JournalList';
 import Body from './layouts/Body/Body';
 import LeftPanel from './layouts/LeftPanel/LeftPanel';
-
+import JournalForm from './components/JournalForm/JournalForm';
+const INITIAL_DATA = [
+  // {
+  //   id: 1,
+  //   title: 'Подготовка к обновлению курсов',
+  //   post: 'Горные походы открывают удивительные природные ландшафты',
+  //   date: new Date(),
+  // },
+  // {
+  //   id: 2,
+  //   title: 'Поход в годы',
+  //   post: 'Думал, что очень много време.',
+  //   date: new Date(),
+  // },
+];
 function App() {
-  const data = [
-    {
-      title: 'Подготовка к обновлению курсов',
-      post: 'Горные походы открывают удивительные природные ландшафты',
-      date: new Date(),
-    },
-    {
-      title: 'Поход в годы',
-      post: 'Думал, что очень много време.',
-      date: new Date(),
-    },
-  ];
-
+  const [items, setItems] = useState(INITIAL_DATA);
+  const addItem = (item) => {
+    setItems((oldItems) => [
+      ...oldItems,
+      {
+        text: item.text,
+        title: item.title,
+        date: new Date(item.date),
+        id: Math.max(...oldItems.map((i) => i.id)) + 1,
+      },
+    ]);
+  };
   return (
     <div className='app'>
       <LeftPanel>
         <Header />
         <JournalAddButton />
-        <JournalList>
-          <CardButton>
-            <JournalItem
-              title={data[0].title}
-              post={data[0].post}
-              date={data[0].date}
-            />
-          </CardButton>
-          <CardButton>
-            <JournalItem
-              title={data[1].title}
-              post={data[1].post}
-              date={data[1].date}
-            />
-          </CardButton>
-        </JournalList>
+        <JournalList items={items} />
       </LeftPanel>
-      <Body>Body</Body>
+      <Body>
+        <JournalForm onSubmit={addItem} />
+      </Body>
     </div>
   );
 }
