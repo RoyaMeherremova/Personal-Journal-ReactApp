@@ -1,14 +1,30 @@
 import styles from './JournalForm.module.css';
 import Button from '../Button/Button';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import cn from 'classnames';
 
+const INITIAL_STATE = {
+  title: true,
+  post: true,
+  date: true
+};
 function JournalForm({ onSubmit }) {
-  const [formValidState, setFormValidState] = useState({
-    title: true,
-    post: true,
-    date: true
-  });
+  const [formValidState, setFormValidState] = useState(INITIAL_STATE);
+
+  useEffect(() => {
+    let timerId;
+    if (!formValidState.date || formValidState.post || formValidState.title) {
+      timerId = setTimeout(() => {
+        setFormValidState(INITIAL_STATE);
+      }, 2000);
+    }
+    return () => {
+      clearTimeout(timerId);
+    };
+
+
+  }, [formValidState]);
+
   const addJournalItem = (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
@@ -44,7 +60,7 @@ function JournalForm({ onSubmit }) {
     <>
       <form className={styles['journal-form']} onSubmit={addJournalItem}>
         <div>
-          <input type='text' name='title' className={cn(styles['input-title'], { [styles['invalid']]: !formValidState.title })} />
+          <input type='text' name='title' className={cn(styles['input'], { [styles['invalid']]: !formValidState.title })} />
         </div>
         <div className={styles['form-row']}>
           <label htmlFor="date" name='date' className={styles['form-label']}>
